@@ -16,7 +16,17 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+
+/*fun LoginScreen() {
+    val darkBackground = Color(0xFF0D1B2A)
+    val primaryGreen = Color(0xFF22C55E)
+    val textColor = Color.White
+
+    var email by remember { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }*/
+
+                // atualizando para usar navigation
+fun LoginScreen(onNavigateToHome: () -> Unit = {}) { // <-- ALTERAÇÃO AQUI
     val darkBackground = Color(0xFF0D1B2A)
     val primaryGreen = Color(0xFF22C55E)
     val textColor = Color.White
@@ -93,7 +103,8 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
-            onClick = { /* Lógica de autenticação futura */ },
+            onClick = { onNavigateToHome() },
+                // ATIVAÇÃO NAVIGATE EM F
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -104,7 +115,7 @@ fun LoginScreen() {
         }
     }
 }
-
+// teste
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
