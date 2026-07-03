@@ -1,44 +1,70 @@
-[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=24197657)
-# :checkered_flag: NOME DO PROJETO
+# 🏁 NOME DO PROJETO
 
-Breve descrição do que o seu projeto faz.
+**Gerenciador de Imóveis — Aplicação Mobile de Apoio à Corretagem Autônoma**
 
-## :technologist: Membros da equipe
-
-Matrícula, nome e curso dos participantes.
-
-## :bulb: Objetivo Geral
-Descrever o objetivo de geral do projeto
-
-## :eyes: Público-Alvo
-Público-alvo do projeto
-
-## :star2: Impacto Esperado
-Descreva o impacto esperado do projeto em relação ao público alvo
-
-
-## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
-
-Descreva ou liste brevemente as principais funcionalidades da aplicação que será desenvolvida. 
+Aplicativo nativo Android desenvolvido para catalogação, gestão diária de portfólio e georreferenciamento de imóveis, focado em otimizar a rotina de corretores autônomos e modernizar pequenos negócios imobiliários através da computação móvel.
 
 ---
 
-> [!WARNING]
+## 🧑‍💻 Membros da equipe
+
+* **Matrícula:** [608584] | **Nome:** João Guilherme Pinto Souza do Nascimento | **Curso:** Engenharia de Software (UFC Quixadá)
+
+---
+
+## 💡 Objetivo Geral
+
+Desenvolver uma solução móvel nativa, robusta e de alta usabilidade aplicando a arquitetura MVVM, projetada para apoiar corretores de imóveis autônomos no cadastro, organização, consulta reativa e traçado de rotas geográficas para visitação de portfólios imobiliários, promovendo a modernização digital de suas atividades profissionais.
+
+---
+
+## 👀 Público-Alvo
+
+Corretores de imóveis autônomos, profissionais independentes do setor imobiliário e pequenos gestores que carecem de ferramentas digitais acessíveis e padronizadas para a gestão de imóveis no dia a dia (utilizando profissionais locais da região como parceiros-piloto para validação de uso real e extensão universitária).
+
+---
+
+## 🌟 Impacto Esperado
+
+* **Substituição de Registros Informais:** Fim da dependência de anotações em cadernos ou planilhas desestruturadas, centralizando os dados de forma segura no celular.
+* **Ganho de Produtividade Diária:** Agilidade no cadastro e na consulta de informações chaves (preço, área, diferenciais) durante o atendimento em tempo real ao cliente.
+* **Otimização de Deslocamento:** Redução do tempo de busca e navegação no trânsito através do georreferenciamento com integração direta a aplicativos de GPS.
+* **Inclusão Digital:** Entrega de uma interface intuitiva com suporte a acessibilidade visual (alto contraste e Modo Escuro), facilitando a transição de profissionais tradicionais para o meio digital.
+
+---
+
+## 🚩 Principais funcionalidades da aplicação
+
+* **Listagem Reativa de Imóveis (Read):** Exibição instantânea do portfólio na tela inicial via `Flow`, atualizando os cards automaticamente no momento em que o banco de dados sofre qualquer alteração, contando com tela informativa explicativa (*Empty State*) quando não há cadastros.
+* **Cadastro Inteligente com API Externa (Create):** Formulário de inserção de imóveis com validação de dados e consulta automatizada de CEP (via integração REST com a API pública ViaCEP), preenchendo logradouro, bairro, cidade e estado em milissegundos.
+* **Edição Ágil via Popup Modal (Update):** Sistema interativo de atualização rápida que permite modificar preços, títulos e descrições diretamente de um diálogo suspenso na tela principal, sem perda de contexto de navegação.
+* **Exclusão Simplificada (Delete):** Remoção instantânea de imóveis obsoletos ou já negociados com apenas um clique no card de listagem.
+* **Georreferenciamento e Rotas GPS (Integração Nativa):** Abertura automática de rotas no Google Maps ou Waze com o endereço exato do imóvel a partir do clique no ícone de localização do card (`Intent` Geográfica do Android).
+* **Suporte Integral ao Modo Escuro (Material Design 3):** Interface com paleta de cores dinâmica que se adapta automaticamente ao tema claro ou escuro configurado no sistema operacional do aparelho.
+
+---
+
+> **Warning**  
 > Daqui em diante o README.md só deve ser preenchido no momento da entrega final.
 
-##  Tecnologias: 
-Liste aqui as tecnologias e bibliotecas que foram utilizadas no projeto.
+## Tecnologias:
+
+O projeto foi construído utilizando as melhores práticas do desenvolvimento moderno para Android:
+
+* **Linguagem:** [Kotlin](https://kotlinlang.org/)
+* **Interface Gráfica:** [Jetpack Compose](https://developer.android.com/jetpack/compose) (UI 100% Declarativa e Material Design 3)
+* **Padrão de Arquitetura:** MVVM (Model - View - ViewModel)
+* **Persistência Local:** [Room Database](https://developer.android.com/training/data-storage/room) (SQLite ORM) + Kotlin Coroutines & Flow
+* **Consumo de API Externa:** [Retrofit 2](https://square.github.io/retrofit/) + Gson Converter (Consulta HTTP à API do [ViaCEP](https://viacep.com.br/))
+* **Integração com o Sistema:** Android Intents para chamadas de URI Geográfica (`geo:0,0?q=...`)
 
 ---
 
 ## Instruções para Execução
-[Inclua instruções claras sobre como rodar o projeto localmente. Isso é crucial para que você possa testá-lo nas próximas entregas. **Somente caso haja alguma coisa diferente do usual**
 
-```bash
-# Clone o repositório
-git clone [https://docs.github.com/pt/repositories/creating-and-managing-repositories/about-repositories](https://docs.github.com/pt/repositories/creating-and-managing-repositories/about-repositories)
+Para compilar e testar o aplicativo localmente em um emulador ou dispositivo físico:
 
-# Navegue para o diretório
-cd [nome-do-repositorio]
-
-# Siga as instruções específicas para a sua tecnologia...
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/Joao-GuilhermeS/imob-app-maneger-.git
+   
