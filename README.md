@@ -1,4 +1,4 @@
-# 🏁 NOME DO PROJETO
+# 🏁 IMOB App-Maneger
 
 **Gerenciador de Imóveis — Aplicação Mobile de Apoio à Corretagem Autônoma**
 
