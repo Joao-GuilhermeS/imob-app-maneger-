@@ -56,4 +56,16 @@ class ImovelViewModel(private val dao: ImovelDao) : ViewModel() {
             onSucesso() // direciona para a Home
         }
     }
+    fun deletarImovel(imovel: Imovel) {
+        viewModelScope.launch {
+            dao.deletarImovel(imovel)
+        }
+    }
+
+    // Atualiza um imóvel existente no banco
+    fun atualizarImovel(imovel: Imovel) {
+        viewModelScope.launch {
+            dao.atualizarImovel(imovel)
+        }
+    }
 }

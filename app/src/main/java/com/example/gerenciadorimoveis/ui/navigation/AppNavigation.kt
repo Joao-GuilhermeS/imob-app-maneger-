@@ -38,8 +38,20 @@ fun AppNavigation() {
 
         // 2a rota -> Tela Principal
         composable("home") {
+            val context = LocalContext.current
+            val banco = ImovelDatabase.getDatabase(context.applicationContext)
+            val dao = banco.imovelDao()
+
+            val imovelViewModel: ImovelViewModel = viewModel(
+                factory = object : ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                        return ImovelViewModel(dao) as T
+                    }
+                }
+            )
+
             HomeScreen(
-                // Ligação simples: clica no "+" e abre a tela de cadastro
+                viewModel = imovelViewModel,
                 onNavigateToCadastro = {
                     navController.navigate("cadastro")
                 }

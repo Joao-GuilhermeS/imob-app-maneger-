@@ -73,7 +73,21 @@ fun CadastroScreen(
             ) {
                 Button(
                     onClick = {
-                        onNavigateBack()
+                        // ✅ CORREÇÃO: Agora chamamos a ViewModel para salvar no banco de verdade!
+                        if (titulo.isNotBlank() && valor.isNotBlank()) {
+                            viewModel.salvarImovel(
+                                titulo = titulo,
+                                tipo = tipoSelecionado,
+                                valorTexto = valor,
+                                areaTexto = area,
+                                enderecoGeral = endereco,
+                                descricao = descricao,
+                                onSucesso = {
+                                    // SÓ volta pra Home DEPOIS que o Room confirmar que salvou
+                                    onNavigateBack()
+                                }
+                            )
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -211,7 +225,7 @@ fun CadastroScreen(
     }
 }
 
-  //garantir legibilidade
+//garantir legibilidade
 @Composable
 fun OutlinedTextFieldAltoContraste(
     value: String,

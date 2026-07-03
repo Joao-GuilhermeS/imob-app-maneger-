@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a30f31-da50-48fc-90d3-3caf3c5ebbdc" name="Changes" comment="feat(navigation): injeta ImovelViewModel na rota de cadastro e conecta ação de salvar">
+    <list default="true" id="88a30f31-da50-48fc-90d3-3caf3c5ebbdc" name="Changes" comment="fix(build): resolve conflitos de dependência do Room e ativa processador KSP&#10;&#10;- Substitui annotationProcessor (kapt) pelo plugin KSP moderno&#10;- Atualiza dependências do Room para suportar Kotlin 2.x sem erro de assinatura JVM&#10;- Eleva compileSdk e targetSdk para 35 corrigindo avisos de checkDebugAarMetadata">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/data/local/ImovelDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/data/local/ImovelDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/navigation/AppNavigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/navigation/AppNavigation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/screens/CadastroScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/screens/CadastroScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/screens/HomeScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/screens/HomeScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/viewmodel/ImovelViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/gerenciadorimoveis/ui/viewmodel/ImovelViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783045506133</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix(build): resolve conflitos de dependência do Room e ativa processador KSP&#10;&#10;- Substitui annotationProcessor (kapt) pelo plugin KSP moderno&#10;- Atualiza dependências do Room para suportar Kotlin 2.x sem erro de assinatura JVM&#10;- Eleva compileSdk e targetSdk para 35 corrigindo avisos de checkDebugAarMetadata">
+      <option name="closed" value="true" />
+      <created>1783058873845</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1783058873845</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -222,6 +230,7 @@
     <MESSAGE value="feat(viewmodel): cria ImovelViewModel com lógica de conversão e persistência no Room" />
     <MESSAGE value="refactor(ui): simplifica CadastroScreen para formulário de tela única com alto contraste" />
     <MESSAGE value="feat(navigation): injeta ImovelViewModel na rota de cadastro e conecta ação de salvar" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(navigation): injeta ImovelViewModel na rota de cadastro e conecta ação de salvar" />
+    <MESSAGE value="fix(build): resolve conflitos de dependência do Room e ativa processador KSP&#10;&#10;- Substitui annotationProcessor (kapt) pelo plugin KSP moderno&#10;- Atualiza dependências do Room para suportar Kotlin 2.x sem erro de assinatura JVM&#10;- Eleva compileSdk e targetSdk para 35 corrigindo avisos de checkDebugAarMetadata" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(build): resolve conflitos de dependência do Room e ativa processador KSP&#10;&#10;- Substitui annotationProcessor (kapt) pelo plugin KSP moderno&#10;- Atualiza dependências do Room para suportar Kotlin 2.x sem erro de assinatura JVM&#10;- Eleva compileSdk e targetSdk para 35 corrigindo avisos de checkDebugAarMetadata" />
   </component>
 </project>
