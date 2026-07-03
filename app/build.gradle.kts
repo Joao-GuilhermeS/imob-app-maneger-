@@ -7,8 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.gerenciadorimoveis"
-    // 2. MUDANÇA: Corrigida a sintaxe experimental do compileSdk para o padrão estável (34),
-    // eliminando alertas e garantindo compatibilidade com o targetSdk 34.
+    // 34 para 35
     compileSdk = 35
 
     defaultConfig {
@@ -54,6 +53,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    // ponte entre app e o servior da interne, no caso para consulta de cep
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     //navegação jatckpack compose
     implementation("androidx.navigation:navigation-compose:2.7.7")

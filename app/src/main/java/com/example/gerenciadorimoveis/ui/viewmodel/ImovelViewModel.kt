@@ -68,4 +68,32 @@ class ImovelViewModel(private val dao: ImovelDao) : ViewModel() {
             dao.atualizarImovel(imovel)
         }
     }
+    fun buscarEnderecoPorCep(
+        cep: String,
+        onSucesso: (String) -> Unit,
+        onErro: () -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                // Remove traços ou espaços
+                val cepLimpo = cep.replace("-", "").replace(".", "").trim()
+
+                if (cepLimpo.length == 8) {
+                    val resposta = com.example.gerenciadorimoveis.data.remote.RetrofitClient.viaCepService.buscarCep(cepLimpo)
+
+                    if (resposta.erro != true && resposta.logradouro != null) {
+                        // Monta o endereço formatado:
+                        val enderecoCompleto = "${resposta.logradouro}, ${resposta.bairro ?: ""} - ${resposta.localidade}/${resposta.uf}"
+                        onSucesso(enderecoCompleto)
+                    } else {
+                        onErro()
+                    }
+                } else {
+                    onErro()
+                }
+            } catch (e: Exception) {
+                onErro()
+            }
+        }
+    }
 }
