@@ -84,7 +84,7 @@ fun HomeScreen(
                 .padding(paddingValues)
         ) {
             if (listaImoveis.isEmpty()) {
-                // --- ESTADO VAZIO (Nenhum imóvel cadastrado) ---
+                //vazio enquanto Nenhum imóvel cadastrad
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -116,7 +116,7 @@ fun HomeScreen(
                     }
                 }
             } else {
-                // --- LISTA DE IMÓVEIS ---
+                // lista de imoveiss
                 LazyColumn(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -133,7 +133,7 @@ fun HomeScreen(
             }
         }
 
-        // --- POPUP MODAL DE EDIÇÃO ---
+        // popupmodal de edição
         imovelParaEditar?.let { imovel ->
             EditarImovelDialog(
                 imovel = imovel,
@@ -162,7 +162,7 @@ fun ImovelCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        // ✅ ATUALIZADO: Troca o branco fixo pela cor de superfície do tema atual
+        //  Troca o branco fixo pela cor de superfície do tema atual
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -195,7 +195,7 @@ fun ImovelCard(
                         text = precoFormatado,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        // ✅ ATUALIZADO: Letra preta no modo claro, branca no modo escuro
+                        //  Letra preta no modo claro, branca no modo escuro
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.width(4.dp))
@@ -254,7 +254,7 @@ fun ImovelCard(
                 text = imovel.titulo,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                // ✅ ATUALIZADO: Cor adaptável para o título
+                // Cor adaptável para o título
                 color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -290,7 +290,7 @@ fun ImovelCard(
     }
 }
 
-// --- COMPONENTE POPUP PARA EDIÇÃO RÁPIDA ---
+// componente popup para edição rápida
 @Composable
 fun EditarImovelDialog(
     imovel: Imovel,
