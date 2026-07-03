@@ -1,20 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    //  aaaaaaaaaaaaaaaa plugin ksp
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
     namespace = "com.example.gerenciadorimoveis"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    // 2. MUDANÇA: Corrigida a sintaxe experimental do compileSdk para o padrão estável (34),
+    // eliminando alertas e garantindo compatibilidade com o targetSdk 34.
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.gerenciadorimoveis"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -23,9 +23,9 @@ android {
 
     buildTypes {
         release {
-            optimization {
-                enable = false
-            }
+
+            // nativa e estável 'isMinifyEnabled = false' para não dar erro de compilação.
+            isMinifyEnabled = false
         }
     }
     compileOptions {
@@ -59,9 +59,11 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
     // room, banco local
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-runtime:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
+    // 4. MUDANÇA CRÍTICA: Substituído 'annotationProcessor' por 'ksp'.
+    // É isso aqui que vai resolver o erro fatal e gerar o ImovelDatabase_Impl!
+    ksp("androidx.room:room-compiler:2.8.4")
 
     //ciclo view model p compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")

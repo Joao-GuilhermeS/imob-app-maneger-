@@ -1,4 +1,4 @@
-package com.example.gerenciadorimoveis.data.local // Confirme o seu pacote
+package com.example.gerenciadorimoveis.data.local
 
 import androidx.room.Dao
 import androidx.room.Delete
