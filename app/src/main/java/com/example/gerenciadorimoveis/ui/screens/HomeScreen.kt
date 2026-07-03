@@ -1,5 +1,8 @@
 package com.example.gerenciadorimoveis.ui.screens
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,11 +13,13 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.HomeWork
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -24,8 +29,7 @@ import com.example.gerenciadorimoveis.domain.model.Imovel
 import com.example.gerenciadorimoveis.ui.viewmodel.ImovelViewModel
 import java.text.NumberFormat
 import java.util.Locale
-
-
+import androidx.compose.foundation.isSystemInDarkTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,10 +43,11 @@ fun HomeScreen(
     // Estado para controlar qual imóvel está sendo editado no Popup modal
     var imovelParaEditar by remember { mutableStateOf<Imovel?>(null) }
 
-    // Paleta de cores limpa
-    val primaryGreen = Color(0xFF16A34A)
-    val textDark = Color(0xFF0F172A)
-    val bgLight = Color(0xFFF8FAFC)
+    // Cores dinâmicas que se adaptam sozinhas ao Modo Claro / Escuro
+    val primaryGreen = MaterialTheme.colorScheme.primary
+    val textDark = MaterialTheme.colorScheme.onBackground
+    val bgLight = MaterialTheme.colorScheme.background
+    val topBarSurface = MaterialTheme.colorScheme.surface
 
     Scaffold(
         topBar = {
@@ -55,7 +60,7 @@ fun HomeScreen(
                         fontSize = 22.sp
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = topBarSurface)
             )
         },
         floatingActionButton = {
@@ -105,7 +110,7 @@ fun HomeScreen(
                         Text(
                             text = "Toque no botão + abaixo para cadastrar o seu primeiro imóvel no sistema.",
                             fontSize = 14.sp,
-                            color = Color(0xFF64748B),
+                            color = if (isSystemInDarkTheme()) Color(0xFF94A3B8) else Color(0xFF64748B),
                             textAlign = TextAlign.Center
                         )
                     }
@@ -120,8 +125,8 @@ fun HomeScreen(
                     items(listaImoveis) { imovel ->
                         ImovelCard(
                             imovel = imovel,
-                            onEdit = { imovelParaEditar = imovel }, // Abre o popup com este imóvel
-                            onDelete = { viewModel.deletarImovel(imovel) } // Exclui na hora
+                            onEdit = { imovelParaEditar = imovel },
+                            onDelete = { viewModel.deletarImovel(imovel) }
                         )
                     }
                 }
@@ -148,6 +153,8 @@ fun ImovelCard(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
+    val context = LocalContext.current
+
     // Formatador de moeda para R$
     val formatadorMoeda = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
     val precoFormatado = formatadorMoeda.format(imovel.preco)
@@ -155,7 +162,8 @@ fun ImovelCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        // ✅ ATUALIZADO: Troca o branco fixo pela cor de superfície do tema atual
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
@@ -163,19 +171,19 @@ fun ImovelCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Linha superior: Badge do Tipo, Preço e Botões de Ação (Editar / Excluir)
+            // Linha superior: Badge do Tipo, Preço e Botões de Ação
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Surface(
-                    color = Color(0xFF16A34A).copy(alpha = 0.1f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
                     shape = RoundedCornerShape(6.dp)
                 ) {
                     Text(
                         text = imovel.tipo.uppercase(),
-                        color = Color(0xFF16A34A),
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -187,24 +195,52 @@ fun ImovelCard(
                         text = precoFormatado,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF0F172A)
+                        // ✅ ATUALIZADO: Letra preta no modo claro, branca no modo escuro
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.width(4.dp))
+
+                    // Botão GPS / Ver no Mapa
+                    IconButton(
+                        onClick = {
+                            if (imovel.logradouro.isNotBlank()) {
+                                val gmmIntentUri = Uri.parse("geo:0,0?q=${Uri.encode(imovel.logradouro)}")
+                                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                                try {
+                                    context.startActivity(mapIntent)
+                                } catch (e: Exception) {
+                                    Toast.makeText(context, "Nenhum aplicativo de mapas encontrado.", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                Toast.makeText(context, "Imóvel sem endereço cadastrado.", Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        modifier = Modifier.size(32.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Place,
+                            contentDescription = "Ver no Mapa",
+                            tint = Color(0xFFEA580C),
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+
                     // Botão Editar
                     IconButton(onClick = onEdit, modifier = Modifier.size(32.dp)) {
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = "Editar",
-                            tint = Color(0xFF3B82F6), // Azul
+                            tint = Color(0xFF3B82F6),
                             modifier = Modifier.size(18.dp)
                         )
                     }
+
                     // Botão Excluir
                     IconButton(onClick = onDelete, modifier = Modifier.size(32.dp)) {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = "Excluir",
-                            tint = Color(0xFFEF4444), // Vermelho
+                            tint = Color(0xFFEF4444),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -218,7 +254,8 @@ fun ImovelCard(
                 text = imovel.titulo,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF0F172A),
+                // ✅ ATUALIZADO: Cor adaptável para o título
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -230,7 +267,7 @@ fun ImovelCard(
                 Text(
                     text = imovel.logradouro,
                     fontSize = 13.sp,
-                    color = Color(0xFF64748B),
+                    color = if (isSystemInDarkTheme()) Color(0xFF94A3B8) else Color(0xFF64748B),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -239,12 +276,12 @@ fun ImovelCard(
             // Descrição (com Área integrada)
             if (imovel.descricao.isNotBlank()) {
                 Spacer(modifier = Modifier.height(8.dp))
-                HorizontalDivider(color = Color(0xFFF1F5F9))
+                HorizontalDivider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f))
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = imovel.descricao,
                     fontSize = 13.sp,
-                    color = Color(0xFF475569),
+                    color = if (isSystemInDarkTheme()) Color(0xFFCBD5E1) else Color(0xFF475569),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -253,7 +290,7 @@ fun ImovelCard(
     }
 }
 
-// componente POPUP para edição rápida
+// --- COMPONENTE POPUP PARA EDIÇÃO RÁPIDA ---
 @Composable
 fun EditarImovelDialog(
     imovel: Imovel,
@@ -268,7 +305,7 @@ fun EditarImovelDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(text = "Editar Imóvel", fontWeight = FontWeight.Bold, color = Color(0xFF0F172A))
+            Text(text = "Editar Imóvel", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -313,14 +350,14 @@ fun EditarImovelDialog(
                     )
                     onSave(imovelAtualizado)
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF16A34A))
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text("Salvar", color = Color.White)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar", color = Color(0xFF64748B))
+                Text("Cancelar", color = if (isSystemInDarkTheme()) Color(0xFF94A3B8) else Color(0xFF64748B))
             }
         }
     )
